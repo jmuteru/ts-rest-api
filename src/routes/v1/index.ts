@@ -11,7 +11,7 @@ const router  = Router()
                 status:'ok',
                 version:'1.0.0',
                 docs:'https://docs.ts-rest-api.jmuteru.com',
-                timeStamp:new Date().toISOString
+                timeStamp:new Date().toISOString()
 
             })
         })

@@ -66,7 +66,6 @@ const startServer = async () => {
     }
 };
 
-startServer();
 
 /**
  graceful shutdown:
@@ -91,6 +90,11 @@ const handleShutDown = async () => {
     }
 }
 
+startServer();
+
+/**
+ * Listen for termination signals ('SIGTERM' &'SIGINT')
+ * **/ 
 process.on("SIGTERM", handleShutDown)
 process.on("SIGINT", handleShutDown)
 
