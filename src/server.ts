@@ -8,6 +8,7 @@ import helmet from "helmet"
 import config from "./config"
 import limiter from "./lib/rateLimiter"
 import { connectToDB, disconnectFromDB } from "./lib/mongoose"
+import { logger } from "./lib/winston"
 //router
 import v1Routes from "./routes/v1"
 const app = express()
@@ -22,6 +23,7 @@ const corsOptions: CorsOptions = {
         else {
             //reject origins not whitelisted
             callback(new Error(`CORS Error:${origin}is not allowed by CORS`), false)
+            logger.warn(`CORS error:${origin} is not allowed by CORS`)
         }
     },
 }
@@ -56,10 +58,10 @@ const startServer = async () => {
 
         app.use('/api/v1', v1Routes) //define API route
         app.listen(config.PORT, () => {
-            console.log(`server is running on port :${config.PORT}`);
+            logger.info(`server is running on port :${config.PORT}`);
         });
     } catch (err) {
-        console.error("Failed to start server:", err);
+        logger.error("Failed to start server:", err);
         if (config.NODE_ENV === "production") {
             process.exit(1);
         }
@@ -79,13 +81,13 @@ const handleShutDown = async () => {
     try {
                 await disconnectFromDB()
 
-        console.log("Server has been SHUTDOWN");
+        logger.warn("Server has been SHUTDOWN");
         process.exit(0)
 
 
     }
     catch (err) {
-        console.log("Error:Unable to shutdown server.", err)
+        logger.error("Error:Unable to shutdown server.", err)
 
     }
 }

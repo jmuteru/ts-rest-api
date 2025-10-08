@@ -45,3 +45,7 @@ coverage/
 # Misc
 .tmp/
 .cache/
+
+
+#Ignore vscode AI rules
+.github\instructions\codacy.instructions.md
