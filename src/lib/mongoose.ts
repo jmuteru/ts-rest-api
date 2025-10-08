@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import type { ConnectOptions } from "mongoose"
 import config from "../config"
-
+import { logger } from "./winston"
 
 const clientOptions :ConnectOptions ={
     dbName:'ts-rest-api',
@@ -29,7 +29,7 @@ export const connectToDB = async ()=>{
 
         try{
             await mongoose.connect(config.MONGO_URI, clientOptions)  
-            console.log("Connection to DB is successful", {
+            logger.info("Connection to DB is successful", {
                 uri:config.MONGO_URI,
                 options:clientOptions
             })
@@ -37,7 +37,7 @@ export const connectToDB = async ()=>{
 
         catch(err){
                     if(err instanceof Error){
-                        console.log("Error connecting to DB",err)
+                        logger.error("Error connecting to DB",err)
                     }
         }
 }
