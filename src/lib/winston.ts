@@ -33,3 +33,14 @@ if(config.NODE_ENV !=='production'){
     )
 
 }
+
+//logger instance 
+const logger  = winston.createLogger({
+    level:config.LOG_LEVEL,
+    format:combine(timestamp(), errors({stack:true}),json()), //json format to log messages
+    transports,
+    silent:config.NODE_ENV ==='test' //disable logging in test
+})
+
+
+export {logger}
