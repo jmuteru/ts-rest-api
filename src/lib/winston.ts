@@ -3,7 +3,6 @@ import winston from "winston"
 
 //module imports
 import config from "../config"
-import { format } from "path"
 
 
 const {combine, timestamp,json, errors, align, printf,colorize}= winston.format
@@ -39,7 +38,7 @@ const logger  = winston.createLogger({
     level:config.LOG_LEVEL,
     format:combine(timestamp(), errors({stack:true}),json()), //json format to log messages
     transports,
-    silent:config.NODE_ENV ==='test' //disable logging in test
+    silent:config.NODE_ENV ==='test' //disable logging in dev
 })
 
 
